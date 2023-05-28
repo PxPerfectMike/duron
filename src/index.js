@@ -7,11 +7,58 @@ async function generateTests(config) {
     // Placeholder for actual test generation
 }
 
+function interpretConfig(config) {
+    const requiredFields = ['function', 'component'];
+
+    requiredFields.forEach((field) => {
+        if (!config[field]) {
+            throw new Error(`Missing required field in config: ${field}`);
+        }
+    });
+
+    // For each function, check that the required fields are present
+    config.function.forEach((func) => {
+        const requiredFunctionFields = [
+            'name',
+            'location',
+            'input',
+            'expectedOutcome',
+        ];
+        requiredFunctionFields.forEach((field) => {
+            if (!func[field]) {
+                throw new Error(
+                    `Missing required field in function config: ${field}`,
+                );
+            }
+        });
+    });
+
+    // For each component, check that the required fields are present
+    config.component.forEach((comp) => {
+        const requiredComponentFields = [
+            'name',
+            'location',
+            'hasButtons',
+            'canMount',
+        ];
+        requiredComponentFields.forEach((field) => {
+            if (!comp[field]) {
+                throw new Error(
+                    `Missing required field in component config: ${field}`,
+                );
+            }
+        });
+    });
+
+    // If we made it this far, the config is valid!
+    return config;
+}
+
 // Main function to run the application
 async function main() {
     try {
         // Load the JSON configuration file
-        const data = await fs.readFile('./config.json', 'utf-8');
+        const data = await fs.readFile('./duronconfig.json', 'utf-8');
         const config = JSON.parse(data);
 
         // Interpret the configuration
@@ -33,4 +80,4 @@ async function main() {
     }
 }
 
-main();
+main().catch(console.error);
