@@ -1,10 +1,30 @@
 import fs from 'fs/promises';
 
 // Function to interpret configuration and generate tests
-async function generateTests(config) {
-    // TODO: Interpret configuration and generate tests
-    console.log('Configuration:', config);
-    // Placeholder for actual test generation
+function generateTests(config) {
+    let testCode = '';
+
+    // Generate a test for each function
+    config.function.forEach((func) => {
+        testCode += `
+            test('${func.name}', () => {
+                const result = require('${func.location}').${func.name}(${func.input});
+                expect(result).toBe(${func.expectedOutcome});
+            });
+        `;
+    });
+
+    // Generate a test for each component
+    config.component.forEach((comp) => {
+        testCode += `
+            test('${comp.name}', () => {
+                const component = require('${comp.location}');
+                expect(component).toBeTruthy();
+            });
+        `;
+    });
+
+    return testCode;
 }
 
 function interpretConfig(config) {
