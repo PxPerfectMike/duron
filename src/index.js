@@ -27,6 +27,22 @@ function generateTests(config) {
     return testCode;
 }
 
+// this is the function that runs the tests
+const { runCLI } = require('jest');
+
+async function runTests(testFilePath) {
+    const { results } = await runCLI(
+        {
+            _: [testFilePath], // this is where we pass file path
+            $0: '', // this must be included but value doesn't matter
+            runInBand: true, // add this flag to run tests serially
+        },
+        [process.cwd()],
+    );
+
+    return results;
+}
+
 function interpretConfig(config) {
     const requiredFields = ['function', 'component'];
 
@@ -87,10 +103,11 @@ async function main() {
         const testCode = generateTests(interpretedConfig);
 
         // Save the test code to a file
-        await fs.writeFile('./generatedTests.js', testCode);
+        const testFilePath = './generatedTests.js';
+        await fs.writeFile(testFilePath, testCode);
 
         // Run the tests
-        const results = runTests('./generatedTests.js');
+        const results = await runTests(testFilePath);
 
         // Print the results
         console.log(results);
