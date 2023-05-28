@@ -1,16 +1,19 @@
 {
-  "name": "duron",
-  "version": "1.0.0",
-  "description": "A framework that automates testing.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Michael Baker",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.41.0",
-    "jest": "^29.5.0",
-    "prettier": "^2.8.8"
-  }
+    "name": "duron",
+    "version": "1.0.0",
+    "description": "A framework that automates testing.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write ."
+    },
+    "author": "Michael Baker",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.41.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "jest": "^29.5.0",
+        "prettier": "^2.8.8"
+    }
 }
