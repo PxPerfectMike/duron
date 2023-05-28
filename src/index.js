@@ -78,8 +78,7 @@ function interpretConfig(config) {
 async function main() {
     try {
         // Load the JSON configuration file
-        const data = await fs.readFile('./duronconfig.json', 'utf-8');
-        const config = JSON.parse(data);
+        const config = await fs.readJson('./duronconfig.json');
 
         // Interpret the configuration
         const interpretedConfig = interpretConfig(config);
